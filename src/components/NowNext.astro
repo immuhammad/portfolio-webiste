@@ -39,9 +39,11 @@ const nextBullets = [
 
       <!-- Arrow -->
       <div class="nn-arrow" aria-hidden="true">
-        <svg width="48" height="72" viewBox="0 0 48 72">
-          <path d="M 8 36 Q 24 16 40 36" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" />
-          <path d="M 30 28 L 40 36 L 32 44" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+        <svg width="52" height="52" viewBox="0 0 52 52">
+          <!-- Arc from top-left to mid-right -->
+          <path d="M 8 10 Q 8 40 36 40" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" />
+          <!-- Arrowhead at (36,40) pointing right -->
+          <path d="M 26 32 L 36 40 L 26 48" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <span class="arrow-label hand accent">phasing</span>
       </div>
