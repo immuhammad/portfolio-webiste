@@ -3,50 +3,49 @@ import { SITE } from '../config';
 
 const columns = [
   {
-    title: 'PHP World',
-    bg: 'var(--paper)',
+    label: 'PHP World',
     pills: ['PHP 8', 'Laravel', 'Magento 2', 'MySQL', 'Shopify'],
   },
   {
-    title: 'AI World (in flight)',
-    bg: 'var(--paper-2)',
+    label: 'AI World (in flight)',
     pills: ['Python', 'PyTorch', 'LangChain', 'Pandas', 'SQL'],
   },
   {
-    title: 'Glue',
-    bg: 'var(--paper)',
+    label: 'Glue',
     pills: ['Docker', 'Git', 'Linux', 'REST', 'GraphQL'],
   },
 ];
 ---
 
 {SITE.sections.stack && (
-  <section class="tech-stack section-pad" id="php-world">
+  <section class="tech-stack" id="php-world">
     <div class="ts-inner">
-      <h2 class="section-title">
-        <span class="prefix">❯ </span>Tech Stack
-      </h2>
+
+      <div class="section-title-row">
+        <span class="title-prefix mono">❯</span>
+        <span class="title-text hand">Stack</span>
+        <span class="title-sub mono">— what I reach for</span>
+      </div>
 
       <div class="ts-grid">
         {columns.map(col => (
-          <div class="ts-col" style={`background: ${col.bg}`}>
-            <h3 class="ts-col-title mono">{col.title}</h3>
+          <div class="ts-box">
+            <!-- Floating label chip on the top border -->
+            <span class="ts-label mono">{col.label}</span>
             <div class="ts-pills">
-              {col.pills.map(p => <span class="pill">{p}</span>)}
+              {col.pills.map(p => <span class="ts-pill mono">{p}</span>)}
             </div>
           </div>
         ))}
       </div>
+
     </div>
   </section>
 )}
 
 <style>
   .tech-stack {
-    padding: 4rem 2rem;
-    background: var(--paper-2);
-    border-top: var(--border);
-    border-bottom: var(--border);
+    padding: 8px 28px 32px;
   }
 
   .ts-inner {
@@ -54,33 +53,68 @@ const columns = [
     margin: 0 auto;
   }
 
+  /* Section title */
+  .section-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .title-prefix { font-size: 14px; color: var(--accent); }
+  .title-text   { font-size: 28px; }
+  .title-sub    { font-size: 11px; color: var(--ink-soft); }
+
+  /* 3-col grid */
   .ts-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    gap: 14px;
   }
 
-  .ts-col {
-    border: var(--border);
-    border-radius: var(--radius);
-    padding: 1.5rem;
+  /* Box: dashed border + floating label (wireframe Box component) */
+  .ts-box {
+    border: 1.5px dashed var(--ink);
+    border-radius: 4px;
+    padding: 12px;
+    padding-top: 16px;
+    position: relative;
+    background: var(--paper);
   }
 
-  .ts-col-title {
-    font-size: 0.6875rem;
+  /* Floating label chip sits on the top border */
+  .ts-label {
+    position: absolute;
+    top: -9px;
+    left: 10px;
+    background: var(--paper);
+    padding: 0 6px;
+    font-size: 9px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    letter-spacing: 0.07em;
     color: var(--ink-soft);
-    margin-bottom: 1rem;
   }
 
+  /* Pills — rounded, dashed border */
   .ts-pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
+    margin-top: 4px;
+  }
+
+  .ts-pill {
+    display: inline-block;
+    padding: 3px 9px;
+    border: 1.5px dashed var(--ink);
+    border-radius: 999px;
+    font-size: 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    color: var(--ink);
   }
 
   @media (max-width: 680px) {
     .ts-grid { grid-template-columns: 1fr; }
+    .title-sub { display: none; }
   }
 </style>

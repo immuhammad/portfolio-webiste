@@ -9,28 +9,32 @@ const nums = ['01', '02', '03'];
 ---
 
 {SITE.sections.services && (
-  <section class="services section-pad" id="hire-me">
+  <section class="services" id="hire-me">
     <div class="services-inner">
-      <h2 class="section-title">
-        <span class="prefix">❯ </span>Hire Me
-      </h2>
+
+      <div class="section-title-row">
+        <span class="title-prefix mono">❯</span>
+        <span class="title-text hand">Hire Me</span>
+        <span class="title-sub mono">— what I can ship for you</span>
+      </div>
 
       <div class="services-grid">
         {services.map((s, i) => (
           <div class={`service-card${i === 1 ? ' service-card--mid' : ''}`}>
-            <span class="service-num mono accent">{nums[i]}</span>
+            <span class="service-num mono">{nums[i]}</span>
             <h3 class="service-title hand">{s.data.title}</h3>
-            <p class="service-body mono ink-soft">{s.body}</p>
+            <p class="service-body mono">{s.body.trim()}</p>
           </div>
         ))}
       </div>
+
     </div>
   </section>
 )}
 
 <style>
   .services {
-    padding: 4rem 2rem;
+    padding: 8px 28px 32px;
   }
 
   .services-inner {
@@ -38,16 +42,30 @@ const nums = ['01', '02', '03'];
     margin: 0 auto;
   }
 
+  /* Section title */
+  .section-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .title-prefix { font-size: 14px; color: var(--accent); }
+  .title-text   { font-size: 28px; }
+  .title-sub    { font-size: 11px; color: var(--ink-soft); }
+
+  /* 3-col grid */
   .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    gap: 14px;
   }
 
+  /* Box: dashed border (wireframe Box component style) */
   .service-card {
-    border: var(--border);
-    border-radius: var(--radius);
-    padding: 1.5rem;
+    border: 1.5px dashed var(--ink);
+    border-radius: 4px;
+    padding: 12px;
     background: var(--paper);
   }
 
@@ -56,23 +74,25 @@ const nums = ['01', '02', '03'];
   }
 
   .service-num {
-    font-size: 0.625rem;
-    letter-spacing: 0.08em;
     display: block;
-    margin-bottom: 0.6rem;
+    font-size: 10px;
+    color: var(--accent);
+    margin-bottom: 4px;
   }
 
   .service-title {
-    font-size: 1.375rem;
-    margin-bottom: 0.75rem;
+    font-size: 22px;
+    margin-bottom: 6px;
   }
 
   .service-body {
-    font-size: 0.6875rem;
-    line-height: 1.7;
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--ink-soft);
   }
 
   @media (max-width: 680px) {
     .services-grid { grid-template-columns: 1fr; }
+    .title-sub { display: none; }
   }
 </style>
