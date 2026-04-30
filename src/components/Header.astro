@@ -1,0 +1,97 @@
+---
+import { SITE } from '../config';
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-box">M</span>
+      <span class="logo-name">{SITE.name.split(' ')[0]} {SITE.name.split(' ')[1]}</span>
+    </a>
+    <nav class="nav">
+      <a href="#php-world">PHP World</a>
+      <span class="nav-sep">|</span>
+      <a href="#ai-world">AI World</a>
+      <span class="nav-sep">|</span>
+      <a href="#writing">Writing</a>
+      <span class="nav-sep">|</span>
+      <a href="#hire-me" class="nav-hire">Hire Me</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: var(--border);
+    background: var(--paper);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0.9rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .logo-box {
+    width: 28px;
+    height: 28px;
+    border: var(--border);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .logo-name {
+    font-family: var(--hand);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+  }
+
+  .nav a {
+    color: var(--ink-soft);
+    transition: color 0.15s;
+  }
+
+  .nav a:hover {
+    color: var(--ink);
+  }
+
+  .nav-sep {
+    color: var(--ink-soft);
+    opacity: 0.4;
+  }
+
+  .nav-hire {
+    color: var(--accent) !important;
+  }
+
+  @media (max-width: 600px) {
+    .nav { display: none; }
+  }
+</style>

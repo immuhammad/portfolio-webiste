@@ -1,11 +1,27 @@
 ---
 import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Stats from '../components/Stats.astro';
+import NowNext from '../components/NowNext.astro';
+import LearningLog from '../components/LearningLog.astro';
+import Projects from '../components/Projects.astro';
+import TechStack from '../components/TechStack.astro';
+import Services from '../components/Services.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config';
 ---
 
-<Base>
-  <main>
-    <p style="padding: 2rem; font-family: var(--mono); color: var(--ink-soft);">
-      Portfolio — coming soon.
-    </p>
-  </main>
+<Base title={`${SITE.name} — PHP & AI Engineer`}>
+  <Header />
+  <Hero />
+  <Stats />
+  {SITE.sections.nowNext     && <NowNext />}
+  {SITE.sections.learningLog && <LearningLog />}
+  {SITE.sections.projects    && <Projects />}
+  {SITE.sections.stack       && <TechStack />}
+  {SITE.sections.services    && <Services />}
+  {SITE.sections.contact     && <Contact />}
+  <Footer />
 </Base>

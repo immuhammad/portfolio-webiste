@@ -1,0 +1,154 @@
+---
+import { SITE } from '../config';
+---
+
+{SITE.sections.contact && (
+  <section class="contact section-pad" id="contact">
+    <div class="contact-inner">
+      <h2 class="section-title">
+        <span class="prefix">❯ </span>Contact
+      </h2>
+
+      <div class="contact-grid">
+        <!-- Left: headline + links -->
+        <div class="contact-left">
+          <h3 class="contact-headline hand">Let's build something.</h3>
+
+          <ul class="contact-links mono">
+            <li>
+              <a href={`mailto:${SITE.email}`}>→ {SITE.email}</a>
+            </li>
+            <li>
+              <a href={`https://github.com/${SITE.github}`} target="_blank" rel="noopener">
+                → github.com/{SITE.github}
+              </a>
+            </li>
+            <li>
+              <a href={`https://linkedin.com/in/${SITE.linkedin}`} target="_blank" rel="noopener">
+                → linkedin.com/in/{SITE.linkedin}
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right: static form sketch -->
+        <form class="contact-form" action="#" method="POST">
+          <div class="form-field">
+            <input
+              type="text"
+              name="name"
+              placeholder="NAME"
+              class="form-input mono"
+              autocomplete="name"
+            />
+          </div>
+          <div class="form-field">
+            <input
+              type="email"
+              name="email"
+              placeholder="EMAIL"
+              class="form-input mono"
+              autocomplete="email"
+            />
+          </div>
+          <div class="form-field">
+            <textarea
+              name="message"
+              placeholder="MESSAGE"
+              class="form-input form-textarea mono"
+              rows="5"
+            ></textarea>
+          </div>
+          <button type="submit" class="pill pill--accent submit-btn mono">
+            $ send_message →
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .contact {
+    padding: 4rem 2rem;
+    background: var(--paper-2);
+    border-top: var(--border);
+  }
+
+  .contact-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .contact-headline {
+    font-size: 1.625rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-links {
+    list-style: none;
+    font-size: 0.6875rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .contact-links a {
+    color: var(--ink-soft);
+    transition: color 0.15s;
+  }
+
+  .contact-links a:hover {
+    color: var(--accent);
+  }
+
+  .form-field {
+    margin-bottom: 0.75rem;
+  }
+
+  .form-input {
+    width: 100%;
+    background: var(--paper);
+    border: 1.5px dashed var(--ink-soft);
+    border-radius: var(--radius);
+    padding: 0.6rem 0.8rem;
+    font-size: 0.6875rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .form-input:focus {
+    border-color: var(--accent);
+    border-style: solid;
+  }
+
+  .form-input::placeholder {
+    color: var(--ink-soft);
+    opacity: 0.6;
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .submit-btn {
+    font-size: 0.75rem;
+    padding: 0.45em 1.1em;
+    border-radius: var(--radius);
+    cursor: pointer;
+    border: none;
+  }
+
+  @media (max-width: 680px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+</style>

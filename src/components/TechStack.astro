@@ -1,0 +1,86 @@
+---
+import { SITE } from '../config';
+
+const columns = [
+  {
+    title: 'PHP World',
+    bg: 'var(--paper)',
+    pills: ['PHP 8', 'Laravel', 'Magento 2', 'MySQL', 'Shopify'],
+  },
+  {
+    title: 'AI World (in flight)',
+    bg: 'var(--paper-2)',
+    pills: ['Python', 'PyTorch', 'LangChain', 'Pandas', 'SQL'],
+  },
+  {
+    title: 'Glue',
+    bg: 'var(--paper)',
+    pills: ['Docker', 'Git', 'Linux', 'REST', 'GraphQL'],
+  },
+];
+---
+
+{SITE.sections.stack && (
+  <section class="tech-stack section-pad" id="php-world">
+    <div class="ts-inner">
+      <h2 class="section-title">
+        <span class="prefix">❯ </span>Tech Stack
+      </h2>
+
+      <div class="ts-grid">
+        {columns.map(col => (
+          <div class="ts-col" style={`background: ${col.bg}`}>
+            <h3 class="ts-col-title mono">{col.title}</h3>
+            <div class="ts-pills">
+              {col.pills.map(p => <span class="pill">{p}</span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .tech-stack {
+    padding: 4rem 2rem;
+    background: var(--paper-2);
+    border-top: var(--border);
+    border-bottom: var(--border);
+  }
+
+  .ts-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .ts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .ts-col {
+    border: var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+
+  .ts-col-title {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--ink-soft);
+    margin-bottom: 1rem;
+  }
+
+  .ts-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  @media (max-width: 680px) {
+    .ts-grid { grid-template-columns: 1fr; }
+  }
+</style>

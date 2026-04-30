@@ -1,0 +1,78 @@
+---
+import { getCollection } from 'astro:content';
+import { SITE } from '../config';
+
+const services = (await getCollection('services'))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const nums = ['01', '02', '03'];
+---
+
+{SITE.sections.services && (
+  <section class="services section-pad" id="hire-me">
+    <div class="services-inner">
+      <h2 class="section-title">
+        <span class="prefix">❯ </span>Hire Me
+      </h2>
+
+      <div class="services-grid">
+        {services.map((s, i) => (
+          <div class={`service-card${i === 1 ? ' service-card--mid' : ''}`}>
+            <span class="service-num mono accent">{nums[i]}</span>
+            <h3 class="service-title hand">{s.data.title}</h3>
+            <p class="service-body mono ink-soft">{s.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .services {
+    padding: 4rem 2rem;
+  }
+
+  .services-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .service-card {
+    border: var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    background: var(--paper);
+  }
+
+  .service-card--mid {
+    background: var(--paper-2);
+  }
+
+  .service-num {
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+
+  .service-title {
+    font-size: 1.375rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .service-body {
+    font-size: 0.6875rem;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 680px) {
+    .services-grid { grid-template-columns: 1fr; }
+  }
+</style>
