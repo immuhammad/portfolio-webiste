@@ -10,7 +10,7 @@ Run `npm run build` before committing every task.
 | # | Task | Status | Commit |
 |---|---|---|---|
 | 0 | Bootstrap: git config, CLAUDE.md, TASKS.md | ✅ Done | `chore: bootstrap repo` |
-| 1 | Scaffold Astro project | ⬜ Pending | — |
+| 1 | Scaffold Astro project | ✅ Done | `task(1): scaffold astro project` |
 | 2 | Design tokens, fonts, base layout | ⬜ Pending | — |
 | 3 | Content schema + placeholder markdown files | ⬜ Pending | — |
 | 4 | Build all section components (wireframe-accurate) | ⬜ Pending | — |
