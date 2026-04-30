@@ -9,14 +9,22 @@ const phpProjects = allProjects
 const aiProjects = allProjects
   .filter(p => p.data.category === 'ai')
   .sort((a, b) => a.data.order - b.data.order);
+
+const PAGE_SIZE = 4;
+const phpShowAll  = phpProjects.length > PAGE_SIZE;
+const aiShowAll   = aiProjects.length  > PAGE_SIZE;
 ---
 
 {SITE.sections.projects && (
-  <section class="projects section-pad" id="projects">
+  <section class="projects" id="projects">
     <div class="projects-inner">
-      <h2 class="section-title">
-        <span class="prefix">❯ </span>Projects
-      </h2>
+
+      <!-- Section title — matches SectionTitle wireframe pattern -->
+      <div class="section-title-row">
+        <span class="title-prefix mono">❯</span>
+        <span class="title-text hand">Projects</span>
+        <span class="title-sub mono">— production work · learning projects</span>
+      </div>
 
       <!-- Tab bar -->
       <div class="tabs" role="tablist">
@@ -26,56 +34,79 @@ const aiProjects = allProjects
         <button class="tab" role="tab" data-tab="ai" aria-selected="false">
           🧠 Learning (AI)
         </button>
+        <div class="tabs-spacer"></div>
       </div>
 
       <!-- PHP panel -->
       <div class="tab-panel" id="panel-php" role="tabpanel">
         <div class="card-grid">
-          {phpProjects.length > 0
-            ? phpProjects.map(p => (
-                <div class="project-card">
-                  <div class="card-screenshot hatch-placeholder" aria-hidden="true" />
-                  <div class="card-body">
-                    <h3 class="card-title hand">{p.data.title}</h3>
-                    <p class="card-tag mono ink-soft">{p.data.tag}</p>
-                  </div>
-                </div>
-              ))
-            : <p class="mono ink-soft empty-note">No PHP projects yet — add them in src/content/projects/</p>
-          }
+          {phpProjects.map(p => (
+            <div class="project-card">
+              <!-- Screenshot placeholder: X lines + label, matching wireframe Placeholder -->
+              <div class="card-screenshot">
+                <svg class="screenshot-x" preserveAspectRatio="none" viewBox="0 0 100 100" aria-hidden="true">
+                  <line x1="0" y1="0" x2="100" y2="100" stroke="var(--ink)" stroke-width="0.4" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" />
+                  <line x1="100" y1="0" x2="0" y2="100" stroke="var(--ink)" stroke-width="0.4" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" />
+                </svg>
+                <span class="screenshot-label mono">screenshot · {p.data.tag.split('·')[0].trim()}</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title hand">{p.data.title}</h3>
+                <p class="card-tag mono">{p.data.tag}</p>
+              </div>
+            </div>
+          ))}
         </div>
+        {phpShowAll && (
+          <div class="see-all-wrap">
+            <a href="/projects" class="see-all-pill mono">see all →</a>
+          </div>
+        )}
       </div>
 
-      <!-- AI panel (hidden by default) -->
+      <!-- AI panel -->
       <div class="tab-panel tab-panel--hidden" id="panel-ai" role="tabpanel">
-        <div class="card-grid">
-          {aiProjects.length > 0
-            ? aiProjects.map(p => (
+        {aiProjects.length > 0
+          ? (
+            <div class="card-grid">
+              {aiProjects.map(p => (
                 <div class="project-card">
-                  <div class="card-screenshot hatch-placeholder" aria-hidden="true" />
+                  <div class="card-screenshot">
+                    <svg class="screenshot-x" preserveAspectRatio="none" viewBox="0 0 100 100" aria-hidden="true">
+                      <line x1="0" y1="0" x2="100" y2="100" stroke="var(--ink)" stroke-width="0.4" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" />
+                      <line x1="100" y1="0" x2="0" y2="100" stroke="var(--ink)" stroke-width="0.4" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" />
+                    </svg>
+                    <span class="screenshot-label mono">screenshot · {p.data.tag.split('·')[0].trim()}</span>
+                  </div>
                   <div class="card-body">
                     <h3 class="card-title hand">{p.data.title}</h3>
-                    <p class="card-tag mono ink-soft">{p.data.tag}</p>
+                    <p class="card-tag mono">{p.data.tag}</p>
                   </div>
                 </div>
-              ))
-            : <p class="mono ink-soft empty-note">No AI projects yet — add them in src/content/projects/</p>
-          }
-        </div>
+              ))}
+            </div>
+          )
+          : (
+            <div class="ai-empty">
+              <p class="hand ai-empty-title">The models are training. So am I.</p>
+              <p class="mono ai-empty-sub">PyTorch notebooks live here once they stop embarrassing me.</p>
+            </div>
+          )
+        }
+        {aiShowAll && (
+          <div class="see-all-wrap">
+            <a href="/projects" class="see-all-pill mono">see all →</a>
+          </div>
+        )}
       </div>
 
-      <div class="projects-footer">
-        <a href={`https://github.com/${SITE.github}`} class="pill" target="_blank" rel="noopener">
-          see all on GitHub →
-        </a>
-      </div>
     </div>
   </section>
 )}
 
 <style>
   .projects {
-    padding: 4rem 2rem;
+    padding: 8px 28px 32px;
   }
 
   .projects-inner {
@@ -83,23 +114,38 @@ const aiProjects = allProjects
     margin: 0 auto;
   }
 
+  /* Section title — same pattern as NowNext */
+  .section-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .title-prefix { font-size: 14px; color: var(--accent); }
+  .title-text   { font-size: 28px; }
+  .title-sub    { font-size: 11px; color: var(--ink-soft); }
+
+  /* Tab bar */
   .tabs {
     display: flex;
-    gap: 0;
-    margin-bottom: 1.5rem;
-    border-bottom: var(--border);
+    align-items: flex-end;
+    margin-bottom: 16px;
+    border-bottom: 1.5px solid var(--ink);
   }
+
+  .tabs-spacer { flex: 1; }
 
   .tab {
     font-family: var(--mono);
-    font-size: 0.75rem;
-    padding: 0.6rem 1.1rem;
+    font-size: 11px;
+    padding: 8px 16px;
     background: none;
     border: none;
     border-bottom: 3px solid transparent;
+    margin-bottom: -1.5px;
     cursor: pointer;
     color: var(--ink-soft);
-    margin-bottom: -1.5px;
     transition: color 0.15s;
   }
 
@@ -108,54 +154,108 @@ const aiProjects = allProjects
     border-bottom-color: var(--accent);
   }
 
-  .tab-panel--hidden {
-    display: none;
-  }
+  .tab-panel--hidden { display: none; }
 
+  /* Card grid */
   .card-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    gap: 14px;
+    margin-bottom: 14px;
   }
 
+  /* Card — dashed border matching wireframe Box */
   .project-card {
-    border: var(--border);
-    border-radius: var(--radius);
+    border: 1.5px dashed var(--ink);
+    border-radius: 4px;
     overflow: hidden;
+    background: var(--paper);
   }
 
+  /* Screenshot placeholder — X lines, no top border, dashed bottom border */
   .card-screenshot {
-    height: 140px;
-    border-bottom: var(--border);
+    height: 100px;
+    border-bottom: 1.5px dashed var(--ink);
+    background: repeating-linear-gradient(
+      45deg,
+      transparent 0 8px,
+      rgba(0, 0, 0, 0.04) 8px 9px
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
   }
 
+  .screenshot-x {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .screenshot-label {
+    font-size: 10px;
+    color: var(--ink-soft);
+    background: var(--paper);
+    padding: 2px 6px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Card body */
   .card-body {
-    padding: 0.9rem 1rem;
+    padding: 12px;
   }
 
   .card-title {
-    font-size: 1.125rem;
-    margin-bottom: 0.25rem;
+    font-size: 18px;
+    margin-bottom: 2px;
   }
 
   .card-tag {
-    font-size: 0.625rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-size: 10px;
+    color: var(--ink-soft);
   }
 
-  .empty-note {
-    font-size: 0.75rem;
-    padding: 1rem 0;
+  /* see all — centered pill, hidden when not needed */
+  .see-all-wrap {
+    text-align: center;
+    margin-top: 14px;
   }
 
-  .projects-footer {
-    margin-top: 0.5rem;
+  .see-all-pill {
+    display: inline-block;
+    padding: 3px 12px;
+    border: 1.5px dashed var(--ink);
+    border-radius: 999px;
+    font-size: 10px;
+    color: var(--ink);
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+
+  .see-all-pill:hover { opacity: 0.7; }
+
+  /* AI empty state */
+  .ai-empty {
+    padding: 3rem 1rem;
+    text-align: center;
+  }
+
+  .ai-empty-title {
+    font-size: 26px;
+    margin-bottom: 8px;
+  }
+
+  .ai-empty-sub {
+    font-size: 11px;
+    color: var(--ink-soft);
   }
 
   @media (max-width: 600px) {
     .card-grid { grid-template-columns: 1fr; }
+    .title-sub  { display: none; }
   }
 </style>
 
