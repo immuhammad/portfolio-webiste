@@ -170,6 +170,12 @@ const aiShowAll   = aiProjects.length  > PAGE_SIZE;
     border-radius: 4px;
     overflow: hidden;
     background: var(--paper);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .project-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 
   /* Screenshot placeholder — X lines, no top border, dashed bottom border */
