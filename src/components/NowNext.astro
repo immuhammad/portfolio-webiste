@@ -3,27 +3,31 @@ const nowPills  = ['PHP', 'Laravel', 'Magento 2', 'MySQL', 'REST APIs', 'Shopify
 const nextPills = ['Python', 'PyTorch', 'LangChain', 'Pandas', 'SQL', 'Airflow'];
 
 const nowBullets = [
-  'Maintaining multi-tenant Magento 2 stores',
-  'Building custom Laravel APIs for clients',
-  'Integrating Shopify with back-office systems',
+  'Maintaining custom Magento stores',
+  'Building Shopify plugins (Laravel)',
+  'Magento extensions & integrations',
 ];
 
 const nextBullets = [
-  'MSc AI coursework + fast.ai curriculum',
-  'Building RAG pipelines with LangChain + Chroma',
-  'Experimenting with data pipelines and Airflow',
+  'Studying ML fundamentals + DL',
+  'Building LLM apps & agents',
+  'Data pipelines, ETL, warehousing',
 ];
 ---
 
-<section class="now-next section-pad" id="ai-world">
-  <div class="now-next-inner">
-    <h2 class="section-title">
-      <span class="prefix">❯ </span>Now / Next
-    </h2>
+<section class="now-next" id="ai-world">
+  <div class="nn-inner">
+    <!-- Section title with subtitle — exact wireframe pattern -->
+    <div class="section-title-row">
+      <span class="title-prefix mono">❯</span>
+      <span class="title-text hand">Now / Next</span>
+      <span class="title-sub mono">— where I am · where I'm going</span>
+    </div>
 
     <div class="nn-grid">
-      <!-- NOW -->
+      <!-- NOW box: dashed border + floating label -->
       <div class="nn-box nn-now">
+        <span class="box-label mono">// NOW</span>
         <h3 class="nn-title hand">Backend / E-commerce</h3>
         <div class="nn-pills">
           {nowPills.map(p => <span class="pill">{p}</span>)}
@@ -35,15 +39,16 @@ const nextBullets = [
 
       <!-- Arrow -->
       <div class="nn-arrow" aria-hidden="true">
-        <svg viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M30 10 C10 20, 10 55, 30 65" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" fill="none"/>
-          <path d="M22 58 L30 68 L38 58" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <svg width="24" height="40" viewBox="0 0 24 40">
+          <path d="M 4 20 Q 12 10 20 20" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" />
+          <path d="M 16 16 L 20 20 L 16 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-        <span class="nn-arrow-label hand accent">phasing</span>
+        <span class="arrow-label hand accent">phasing</span>
       </div>
 
-      <!-- NEXT -->
+      <!-- NEXT box: dashed border + floating label + paper-2 bg -->
       <div class="nn-box nn-next">
+        <span class="box-label mono">// NEXT</span>
         <h3 class="nn-title hand">AI / Data Engineering</h3>
         <div class="nn-pills">
           {nextPills.map(p => <span class="pill">{p}</span>)}
@@ -58,69 +63,112 @@ const nextBullets = [
 
 <style>
   .now-next {
-    padding: 4rem 2rem;
+    padding: 8px 28px 32px;
   }
 
-  .now-next-inner {
+  .nn-inner {
     max-width: 1100px;
     margin: 0 auto;
   }
 
+  /* Section title row — prefix + title + subtitle on one baseline */
+  .section-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .title-prefix {
+    font-size: 14px;
+    color: var(--accent);
+  }
+
+  .title-text {
+    font-size: 28px;
+  }
+
+  .title-sub {
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+
+  /* 3-col grid: content | 24px arrow | content */
   .nn-grid {
     display: grid;
-    grid-template-columns: 1fr 60px 1fr;
-    gap: 1rem;
-    align-items: start;
+    grid-template-columns: 1fr 24px 1fr;
+    gap: 0;
+    align-items: stretch;
   }
 
+  /* Box with dashed border + floating label (like wireframe Box component) */
   .nn-box {
-    border: var(--border);
-    border-radius: var(--radius);
-    padding: 1.5rem;
+    border: 1.5px dashed var(--ink);
+    border-radius: 4px;
+    padding: 12px;
+    position: relative;
+    min-height: 200px;
   }
 
-  .nn-now  { background: var(--paper); }
+  .nn-now { background: var(--paper); }
   .nn-next { background: var(--paper-2); }
 
+  /* Floating label chip that sits on the top border */
+  .box-label {
+    position: absolute;
+    top: -9px;
+    left: 10px;
+    background: var(--paper);
+    padding: 0 6px;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .nn-next .box-label {
+    background: var(--paper-2);
+  }
+
   .nn-title {
-    font-size: 1.375rem;
-    margin-bottom: 1rem;
+    font-size: 22px;
+    margin-bottom: 10px;
   }
 
   .nn-pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-bottom: 1rem;
+    gap: 0;
+    margin-bottom: 10px;
   }
 
+  /* Pills in wireframe have margin-right/bottom baked in */
+  .nn-pills .pill {
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 999px;
+  }
+
+  /* Standard ul bullets matching wireframe */
   .nn-list {
-    list-style: none;
-    font-size: 0.6875rem;
-    color: var(--ink-soft);
+    font-size: 11px;
     line-height: 1.7;
+    padding-left: 16px;
+    color: var(--ink-soft);
+    margin: 0;
   }
 
-  .nn-list li::before {
-    content: '– ';
-    color: var(--accent);
-  }
-
+  /* Arrow column */
   .nn-arrow {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 2rem;
-    gap: 0.25rem;
+    justify-content: center;
+    gap: 4px;
   }
 
-  .nn-arrow svg {
-    width: 40px;
-    height: 56px;
-  }
-
-  .nn-arrow-label {
-    font-size: 0.875rem;
+  .arrow-label {
+    font-size: 14px;
     writing-mode: vertical-rl;
     transform: rotate(180deg);
   }
@@ -128,9 +176,8 @@ const nextBullets = [
   @media (max-width: 680px) {
     .nn-grid {
       grid-template-columns: 1fr;
+      gap: 1rem;
     }
-    .nn-arrow {
-      display: none;
-    }
+    .nn-arrow { display: none; }
   }
 </style>

@@ -9,35 +9,51 @@ const { photoSrc } = Astro.props;
 
 <section class="hero">
   <div class="hero-inner">
+    <!-- Photo -->
     <div class="hero-photo">
       {photoSrc
         ? <img src={photoSrc} alt={SITE.name} class="photo-img" />
-        : <div class="photo-placeholder hatch-placeholder" aria-hidden="true">
-            <span class="photo-label mono ink-soft">photo</span>
+        : <div class="photo-placeholder" aria-label="Photo placeholder">
+            <svg
+              class="placeholder-x"
+              preserveAspectRatio="none"
+              viewBox="0 0 100 100"
+              aria-hidden="true"
+            >
+              <line x1="0" y1="0" x2="100" y2="100" stroke="var(--ink)" stroke-width="0.4" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" />
+              <line x1="100" y1="0" x2="0" y2="100" stroke="var(--ink)" stroke-width="0.4" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" />
+            </svg>
+            <span class="placeholder-label mono">photo of you</span>
           </div>
       }
     </div>
 
+    <!-- Text -->
     <div class="hero-text">
       <p class="hero-tag mono accent">Two stacks. One engineer.</p>
 
       <h1 class="hero-h1 hand">
-        PHP shops by day.<br />PyTorch notebooks<br />by night.
+        PHP shops by day.<br />PyTorch notebooks by night.
       </h1>
 
-      <svg class="squiggle" viewBox="0 0 260 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M2 7 C20 2, 40 12, 60 7 S100 2, 120 7 S160 12, 180 7 S220 2, 258 7"
-          stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      <!-- Squiggle underline — width matches wireframe (140px) -->
+      <svg class="squiggle" width="140" height="6" viewBox="0 0 140 6" aria-hidden="true">
+        <path
+          d="M 0 3 Q 17.5 0 35 3 T 70 3 T 105 3 T 140 3"
+          fill="none"
+          stroke="var(--accent)"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
       </svg>
 
       <p class="hero-sub mono ink-soft">
-        8 years building production PHP — Magento, Laravel, Shopify.<br />
-        Now layering in Python, PyTorch, and LangChain.
+        I keep production e-commerce running while I retool for the AI stack. Both worlds, in public.
       </p>
 
       <div class="hero-ctas">
-        <a href={`mailto:${SITE.email}`} class="pill pill--accent cta-pill">$ get_in_touch</a>
-        <a href="#projects" class="pill cta-pill">view projects →</a>
+        <a href={`mailto:${SITE.email}`} class="cta-pill cta-pill--accent mono">$ get_in_touch</a>
+        <a href="#projects" class="cta-pill mono">view projects →</a>
       </div>
     </div>
   </div>
@@ -45,21 +61,19 @@ const { photoSrc } = Astro.props;
 
 <style>
   .hero {
-    padding: 4rem 2rem;
+    padding: 44px 28px 8px;
     max-width: 1100px;
     margin: 0 auto;
   }
 
   .hero-inner {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 3rem;
+    display: flex;
+    gap: 28px;
     align-items: center;
   }
 
+  /* ── Photo placeholder (wireframe-accurate) ── */
   .hero-photo {
-    width: 200px;
-    height: 240px;
     flex-shrink: 0;
   }
 
@@ -67,77 +81,99 @@ const { photoSrc } = Astro.props;
     width: 200px;
     height: 240px;
     object-fit: cover;
-    border-radius: var(--radius);
-    border: var(--border);
+    border-radius: 4px;
+    border: 1.5px dashed var(--ink);
   }
 
   .photo-placeholder {
     width: 200px;
     height: 240px;
-    border: 1.5px dashed var(--ink-soft);
-    border-radius: var(--radius);
+    border: 1.5px dashed var(--ink);
+    border-radius: 4px;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent 0 8px,
+      rgba(0, 0, 0, 0.05) 8px 9px
+    );
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 1;
+    position: relative;
   }
 
-  .photo-label {
-    font-size: 0.6875rem;
-    opacity: 0.6;
+  .placeholder-x {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
   }
 
+  .placeholder-label {
+    font-size: 10px;
+    color: var(--ink-soft);
+    background: var(--paper);
+    padding: 2px 6px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Text ── */
   .hero-tag {
-    font-size: 0.6875rem;
+    font-size: 11px;
     letter-spacing: 0.04em;
-    text-transform: uppercase;
-    margin-bottom: 0.75rem;
+    margin-bottom: 10px;
   }
 
   .hero-h1 {
-    font-size: 2.375rem;
+    font-size: 38px;
     line-height: 1.15;
-    color: var(--ink);
-    margin-bottom: 0.5rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
   }
 
   .squiggle {
-    width: 260px;
-    height: 14px;
-    margin-bottom: 1.25rem;
+    display: block;
+    margin-bottom: 16px;
   }
 
   .hero-sub {
-    font-size: 0.75rem;
-    line-height: 1.7;
+    font-size: 12px;
+    line-height: 1.6;
     max-width: 460px;
-    margin-bottom: 1.75rem;
+    margin-bottom: 18px;
   }
 
   .hero-ctas {
     display: flex;
-    gap: 0.75rem;
+    gap: 10px;
     flex-wrap: wrap;
   }
 
   .cta-pill {
-    font-size: 0.75rem;
-    padding: 0.4em 1em;
-    border-radius: var(--radius);
+    display: inline-block;
+    padding: 3px 9px;
+    border: 1.5px dashed var(--ink);
+    border-radius: 999px;
+    font-size: 10px;
+    color: var(--ink);
+    text-decoration: none;
+    transition: opacity 0.15s;
   }
 
-  @media (max-width: 680px) {
-    .hero-inner {
-      grid-template-columns: 1fr;
-    }
-    .hero-photo {
-      width: 140px;
-      height: 168px;
-    }
-    .photo-img,
-    .photo-placeholder {
-      width: 140px;
-      height: 168px;
-    }
+  .cta-pill--accent {
+    border-style: solid;
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .cta-pill:hover {
+    opacity: 0.8;
+  }
+
+  @media (max-width: 640px) {
+    .hero-inner { flex-direction: column; }
+    .photo-placeholder,
+    .photo-img { width: 140px; height: 168px; }
   }
 </style>
