@@ -37,15 +37,22 @@ const PAGE_SIZE = 4;
       <!-- PHP panel -->
       <div class="tab-panel" id="panel-php" role="tabpanel">
         <div class="card-grid" id="php-grid">
-          {phpProjects.map((p, i) => (
+          {phpProjects.map((p, i) => {
+            const localShot = `/images/screenshots/${p.id}.jpg`;
+            const remoteShot = p.data.url
+              ? `https://api.microlink.io/?url=${encodeURIComponent(p.data.url)}&screenshot=true&meta=false&embed=screenshot.url`
+              : null;
+            const shotSrc = localShot ?? remoteShot;
+            return (
             <div class={`project-card${i >= PAGE_SIZE ? ' card--extra' : ''}`}>
               <div class="card-screenshot">
-                {p.data.url
+                {shotSrc
                   ? <img
-                      src={`https://api.microlink.io/?url=${encodeURIComponent(p.data.url)}&screenshot=true&meta=false&embed=screenshot.url`}
+                      src={localShot}
                       alt={`Screenshot of ${p.data.title}`}
                       class="screenshot-img"
                       loading="lazy"
+                      onerror={`this.onerror=null;this.src='${remoteShot ?? ''}'`}
                     />
                   : <>
                       <svg class="screenshot-x" preserveAspectRatio="none" viewBox="0 0 100 100" aria-hidden="true">
@@ -65,7 +72,8 @@ const PAGE_SIZE = 4;
                 <p class="card-desc mono">{p.body.trim()}</p>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
 
         {phpProjects.length > PAGE_SIZE && (
