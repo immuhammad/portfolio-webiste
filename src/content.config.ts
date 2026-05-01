@@ -8,6 +8,7 @@ const projects = defineCollection({
     tag:        z.string(),
     category:   z.enum(['php', 'ai']),
     screenshot: z.string().optional(),
+    url:        z.string().optional(),
     order:      z.number(),
   }),
 });

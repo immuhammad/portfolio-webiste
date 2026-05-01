@@ -11,15 +11,12 @@ const aiProjects = allProjects
   .sort((a, b) => a.data.order - b.data.order);
 
 const PAGE_SIZE = 4;
-const phpShowAll  = phpProjects.length > PAGE_SIZE;
-const aiShowAll   = aiProjects.length  > PAGE_SIZE;
 ---
 
 {SITE.sections.projects && (
   <section class="projects" id="projects">
     <div class="projects-inner">
 
-      <!-- Section title — matches SectionTitle wireframe pattern -->
       <div class="section-title-row">
         <span class="title-prefix mono">❯</span>
         <span class="title-text hand">Projects</span>
@@ -39,10 +36,9 @@ const aiShowAll   = aiProjects.length  > PAGE_SIZE;
 
       <!-- PHP panel -->
       <div class="tab-panel" id="panel-php" role="tabpanel">
-        <div class="card-grid">
-          {phpProjects.map(p => (
-            <div class="project-card">
-              <!-- Screenshot placeholder: X lines + label, matching wireframe Placeholder -->
+        <div class="card-grid" id="php-grid">
+          {phpProjects.map((p, i) => (
+            <div class={`project-card${i >= PAGE_SIZE ? ' card--extra' : ''}`}>
               <div class="card-screenshot">
                 <svg class="screenshot-x" preserveAspectRatio="none" viewBox="0 0 100 100" aria-hidden="true">
                   <line x1="0" y1="0" x2="100" y2="100" stroke="var(--ink)" stroke-width="0.4" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" />
@@ -51,17 +47,31 @@ const aiShowAll   = aiProjects.length  > PAGE_SIZE;
                 <span class="screenshot-label mono">screenshot · {p.data.tag.split('·')[0].trim()}</span>
               </div>
               <div class="card-body">
-                <h3 class="card-title hand">{p.data.title}</h3>
+                <div class="card-title-row">
+                  <h3 class="card-title hand">{p.data.title}</h3>
+                  {p.data.url && (
+                    <a href={p.data.url} target="_blank" rel="noopener noreferrer" class="card-link mono" title={`Visit ${p.data.title}`}>↗</a>
+                  )}
+                </div>
                 <p class="card-tag mono">{p.data.tag}</p>
+                <p class="card-desc mono">{p.body.trim()}</p>
               </div>
             </div>
           ))}
         </div>
-        {phpShowAll && (
-          <div class="see-all-wrap">
-            <a href="/projects" class="see-all-pill mono">see all →</a>
+
+        {phpProjects.length > PAGE_SIZE && (
+          <div class="see-more-wrap" id="php-see-more">
+            <button class="see-more-btn mono" id="php-expand-btn">
+              see {phpProjects.length - PAGE_SIZE} more ↓
+            </button>
           </div>
         )}
+
+        <div class="sassy-cta" id="php-sassy">
+          <p class="hand sassy-title">That's all {phpProjects.length}.</p>
+          <p class="mono sassy-sub">Need something like this built? Get in touch — I've probably already shipped a version of your problem for one of my clients.</p>
+        </div>
       </div>
 
       <!-- AI panel -->
@@ -79,8 +89,14 @@ const aiShowAll   = aiProjects.length  > PAGE_SIZE;
                     <span class="screenshot-label mono">screenshot · {p.data.tag.split('·')[0].trim()}</span>
                   </div>
                   <div class="card-body">
-                    <h3 class="card-title hand">{p.data.title}</h3>
+                    <div class="card-title-row">
+                      <h3 class="card-title hand">{p.data.title}</h3>
+                      {p.data.url && (
+                        <a href={p.data.url} target="_blank" rel="noopener noreferrer" class="card-link mono" title={`Visit ${p.data.title}`}>↗</a>
+                      )}
+                    </div>
                     <p class="card-tag mono">{p.data.tag}</p>
+                    <p class="card-desc mono">{p.body.trim()}</p>
                   </div>
                 </div>
               ))}
@@ -93,11 +109,6 @@ const aiShowAll   = aiProjects.length  > PAGE_SIZE;
             </div>
           )
         }
-        {aiShowAll && (
-          <div class="see-all-wrap">
-            <a href="/projects" class="see-all-pill mono">see all →</a>
-          </div>
-        )}
       </div>
 
     </div>
@@ -114,7 +125,6 @@ const aiShowAll   = aiProjects.length  > PAGE_SIZE;
     margin: 0 auto;
   }
 
-  /* Section title — same pattern as NowNext */
   .section-title-row {
     display: flex;
     align-items: baseline;
@@ -164,7 +174,9 @@ const aiShowAll   = aiProjects.length  > PAGE_SIZE;
     margin-bottom: 14px;
   }
 
-  /* Card — dashed border matching wireframe Box */
+  .card--extra { display: none; }
+
+  /* Card */
   .project-card {
     border: 1.5px dashed var(--ink);
     border-radius: 4px;
@@ -178,7 +190,7 @@ const aiShowAll   = aiProjects.length  > PAGE_SIZE;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 
-  /* Screenshot placeholder — X lines, no top border, dashed bottom border */
+  /* Screenshot placeholder */
   .card-screenshot {
     height: 100px;
     border-bottom: 1.5px dashed var(--ink);
@@ -214,34 +226,81 @@ const aiShowAll   = aiProjects.length  > PAGE_SIZE;
     padding: 12px;
   }
 
-  .card-title {
-    font-size: 18px;
+  .card-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
     margin-bottom: 2px;
   }
+
+  .card-title {
+    font-size: 18px;
+  }
+
+  .card-link {
+    font-size: 13px;
+    color: var(--accent);
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: opacity 0.15s;
+  }
+
+  .card-link:hover { opacity: 0.7; }
 
   .card-tag {
     font-size: 10px;
     color: var(--ink-soft);
+    margin-bottom: 6px;
   }
 
-  /* see all — centered pill, hidden when not needed */
-  .see-all-wrap {
+  .card-desc {
+    font-size: 10px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  /* See more button */
+  .see-more-wrap {
     text-align: center;
-    margin-top: 14px;
+    margin: 14px 0;
   }
 
-  .see-all-pill {
+  .see-more-btn {
     display: inline-block;
     padding: 3px 12px;
     border: 1.5px dashed var(--ink);
     border-radius: 999px;
     font-size: 10px;
     color: var(--ink);
-    text-decoration: none;
+    background: none;
+    cursor: pointer;
     transition: opacity 0.15s;
   }
 
-  .see-all-pill:hover { opacity: 0.7; }
+  .see-more-btn:hover { opacity: 0.7; }
+
+  /* Sassy CTA — hidden until expanded */
+  .sassy-cta {
+    display: none;
+    text-align: center;
+    padding: 24px 16px 8px;
+    border-top: 1px dashed var(--ink-soft);
+    margin-top: 14px;
+  }
+
+  .sassy-title {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+
+  .sassy-sub {
+    font-size: 10px;
+    color: var(--ink-soft);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
 
   /* AI empty state */
   .ai-empty {
@@ -266,6 +325,7 @@ const aiShowAll   = aiProjects.length  > PAGE_SIZE;
 </style>
 
 <script>
+  // Tab switching
   const tabs = document.querySelectorAll<HTMLButtonElement>('.tab');
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
@@ -282,4 +342,19 @@ const aiShowAll   = aiProjects.length  > PAGE_SIZE;
       });
     });
   });
+
+  // PHP see-more expansion
+  const expandBtn = document.getElementById('php-expand-btn');
+  const seeMoreWrap = document.getElementById('php-see-more');
+  const sassyCta = document.getElementById('php-sassy');
+
+  if (expandBtn && seeMoreWrap && sassyCta) {
+    expandBtn.addEventListener('click', () => {
+      document.querySelectorAll('.card--extra').forEach(card => {
+        (card as HTMLElement).style.display = 'block';
+      });
+      seeMoreWrap.style.display = 'none';
+      sassyCta.style.display = 'block';
+    });
+  }
 </script>
