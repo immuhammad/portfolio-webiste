@@ -15,6 +15,32 @@ const columns = [
     pills: ['Docker', 'Git', 'Linux', 'REST', 'GraphQL'],
   },
 ];
+
+const certsEarned = [
+  {
+    title: 'Adobe Certified Professional',
+    sub:   'Adobe Commerce Developer',
+    issuer: 'Adobe · 2022',
+    url: '',
+  },
+  {
+    title: 'Machine Learning Specialization',
+    sub:   'Supervised ML · Advanced Algorithms · Unsupervised / Reinforcement Learning',
+    issuer: 'DeepLearning.AI / Stanford Online',
+    url: 'https://www.coursera.org/account/accomplishments/specialization/24TCXOEE23DJ',
+  },
+];
+
+const certsWip = [
+  {
+    title: 'Claude Certified Architect',
+    issuer: 'Anthropic',
+  },
+  {
+    title: 'AWS ML Specialty',
+    issuer: 'Amazon Web Services',
+  },
+];
 ---
 
 {SITE.sections.stack && (
@@ -30,13 +56,52 @@ const columns = [
       <div class="ts-grid">
         {columns.map(col => (
           <div class="ts-box">
-            <!-- Floating label chip on the top border -->
             <span class="ts-label mono">{col.label}</span>
             <div class="ts-pills">
               {col.pills.map(p => <span class="ts-pill mono">{p}</span>)}
             </div>
           </div>
         ))}
+      </div>
+
+      <!-- Certifications row — full width, 2-col inside -->
+      <div class="cert-box ts-box">
+        <span class="ts-label mono">// certifications</span>
+
+        <div class="cert-cols">
+
+          <!-- Earned -->
+          <div class="cert-col">
+            <p class="cert-col-label mono">✓ earned</p>
+            {certsEarned.map(c => (
+              <div class="cert-item">
+                <div class="cert-name-row">
+                  <span class="cert-name mono">{c.title}</span>
+                  {c.url && (
+                    <a href={c.url} target="_blank" rel="noopener noreferrer" class="cert-link mono">↗</a>
+                  )}
+                </div>
+                {c.sub && <p class="cert-sub mono">{c.sub}</p>}
+                <p class="cert-issuer mono">{c.issuer}</p>
+              </div>
+            ))}
+          </div>
+
+          <!-- In progress -->
+          <div class="cert-col">
+            <p class="cert-col-label cert-col-label--wip mono">○ in progress</p>
+            {certsWip.map(c => (
+              <div class="cert-item cert-item--wip">
+                <div class="cert-name-row">
+                  <span class="cert-name mono">{c.title}</span>
+                  <span class="wip-badge mono">wip</span>
+                </div>
+                <p class="cert-issuer mono">{c.issuer}</p>
+              </div>
+            ))}
+          </div>
+
+        </div>
       </div>
 
     </div>
@@ -53,7 +118,6 @@ const columns = [
     margin: 0 auto;
   }
 
-  /* Section title */
   .section-title-row {
     display: flex;
     align-items: baseline;
@@ -70,9 +134,10 @@ const columns = [
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 14px;
+    margin-bottom: 14px;
   }
 
-  /* Box: dashed border + floating label (wireframe Box component) */
+  /* Shared box style */
   .ts-box {
     border: 1.5px dashed var(--ink);
     border-radius: 4px;
@@ -82,7 +147,6 @@ const columns = [
     background: var(--paper);
   }
 
-  /* Floating label chip sits on the top border */
   .ts-label {
     position: absolute;
     top: -9px;
@@ -95,7 +159,7 @@ const columns = [
     color: var(--ink-soft);
   }
 
-  /* Pills — rounded, dashed border */
+  /* Pills */
   .ts-pills {
     display: flex;
     flex-wrap: wrap;
@@ -113,8 +177,102 @@ const columns = [
     color: var(--ink);
   }
 
+  /* Certifications box */
+  .cert-box {
+    padding-top: 20px;
+  }
+
+  .cert-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 8px;
+  }
+
+  .cert-col-label {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .cert-col-label--wip {
+    color: var(--ink-soft);
+  }
+
+  .cert-item {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--ink-soft);
+  }
+
+  .cert-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .cert-item--wip {
+    opacity: 0.65;
+  }
+
+  .cert-name-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2px;
+  }
+
+  .cert-name {
+    font-size: 11px;
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .cert-link {
+    font-size: 10px;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    padding: 0px 5px;
+    line-height: 1.6;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .cert-link:hover {
+    background: var(--accent);
+    color: var(--paper);
+  }
+
+  .wip-badge {
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    border: 1px dashed var(--ink-soft);
+    border-radius: 999px;
+    padding: 0px 5px;
+    line-height: 1.6;
+  }
+
+  .cert-sub {
+    font-size: 9px;
+    color: var(--ink-soft);
+    margin-bottom: 2px;
+    line-height: 1.5;
+  }
+
+  .cert-issuer {
+    font-size: 9px;
+    color: var(--ink-soft);
+    opacity: 0.7;
+  }
+
   @media (max-width: 680px) {
     .ts-grid { grid-template-columns: 1fr; }
     .title-sub { display: none; }
+    .cert-cols { grid-template-columns: 1fr; gap: 16px; }
   }
 </style>
