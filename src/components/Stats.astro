@@ -2,9 +2,9 @@
 import { SITE } from '../config';
 
 const stats = [
-  { value: SITE.stats.years,    label: 'PHP/ Laravel/ Shopify/ Magento', link: '' },
-  { value: SITE.stats.projects, label: 'Projects Shipped',               link: '' },
-  { value: SITE.stats.stacks,   label: 'Certs (Live · WIP)',             link: '#certifications' },
+  { value: SITE.stats.years,    label: 'PHP/ Laravel/ Shopify/ Magento', link: '',               certSplit: false },
+  { value: SITE.stats.projects, label: 'Projects Shipped',               link: '',               certSplit: false },
+  { value: SITE.stats.stacks,   label: 'Certs (Live · WIP)',             link: '#certifications', certSplit: true  },
 ];
 ---
 
@@ -13,7 +13,12 @@ const stats = [
     {stats.map((s) => (
       <div class="stat-card">
         {s.link
-          ? <a href={s.link} class="stat-value hand stat-link">{s.value}</a>
+          ? <a href={s.link} class="stat-value hand stat-link">
+              {s.certSplit
+                ? <><span class="cert-earned">2</span><span class="cert-wip"> + 2</span></>
+                : s.value
+              }
+            </a>
           : <span class="stat-value hand">{s.value}</span>
         }
         <span class="stat-label mono">{s.label}</span>
@@ -61,6 +66,10 @@ const stats = [
   .stat-link:hover {
     color: var(--accent);
   }
+
+  /* Cert split: earned = accent (warm, confident), WIP = muted (pending) */
+  .cert-earned { color: var(--accent); }
+  .cert-wip    { color: var(--ink-soft); opacity: 0.55; }
 
   .stat-label {
     font-size: 10px;

@@ -92,6 +92,19 @@ import { SITE } from '../config';
   }
 
   @media (max-width: 640px) {
-    .nav { display: none; }
+    .nav a:not(.nav-resume) { display: none; }
+    .nav-resume { display: inline-block; }
   }
 </style>
+
+<script>
+  document.addEventListener('click', (e) => {
+    const a = (e.target as Element).closest('a[href^="#"]');
+    if (!a) return;
+    const id = a.getAttribute('href')!.slice(1);
+    const target = document.getElementById(id);
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
