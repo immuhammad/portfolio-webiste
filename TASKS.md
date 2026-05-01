@@ -14,118 +14,69 @@ Run `npm run build` before committing every task.
 | 2 | Design tokens, fonts, base layout | ✅ Done | `task(2): design tokens, fonts, base layout` |
 | 3 | Content schema + placeholder markdown files | ✅ Done | `task(3): content schema and placeholder markdown files` |
 | 4 | Build all section components (wireframe-accurate) | ✅ Done | `task(4): all section components built to wireframe spec` |
-| 5 | Compose index + section toggles + polish (smooth scroll, card hover) | ✅ Done | `task(5): index composed, smooth scroll, card hover polish` |
-| 6 | Replace placeholder content with real data (waiting on Ahmad) | ⬜ Pending | — |
-| 7 | Images: slots + graceful fallbacks | ⬜ Pending | — |
-| 8 | Mobile improvements (nav, layout tweaks) | ⬜ Pending | — |
-| 9 | Netlify setup + first real deploy | ⬜ Pending | — |
-| 10 | Custom domain (optional) | ⬜ Pending | — |
-| 11 | Final README cleanup | ⬜ Pending | — |
+| 5 | Compose index + section toggles + polish | ✅ Done | `task(5): index composed, smooth scroll, card hover polish` |
+| 6 | Replace placeholder content with real data | ✅ Done | `task(6): real content, certs, AI projects, stack pills` |
+| 7 | Images: profile photo + project screenshots + fallbacks | ✅ Done | `task(7): profile PNG, screenshots, Microlink fallback` |
+| 8 | Mobile improvements | ✅ Done | `task(8): mobile layout improvements` |
+| 9 | Polish pass (scroll offset, nav fixes, cert colors) | ✅ Done | `fix: scroll offset, no-hash nav, resume on mobile, cert stat colors` |
+| 10 | Image compression + Netlify deploy | ⬜ Pending | — |
+| 11 | Custom domain (optional) | ⬜ Pending | — |
+| 12 | Final README cleanup | ⬜ Pending | — |
 
 ---
 
-## Task Details
+## Pending Tasks
 
-### Task 1 — Scaffold Astro project
-- `npm create astro@latest . -- --template minimal --typescript strict --no-install`
-- `npm install` + `npm install @astrojs/netlify`
-- Create `netlify.toml` (build command, publish dir, NODE_VERSION=20)
-- Create `astro.config.mjs` (static output + netlify adapter)
-- **Must pass:** `npm run build`
-- **Commit:** `task(1): scaffold astro project with netlify adapter`
+### Task 10 — Image compression + Netlify deploy
 
-### Task 2 — Design tokens, fonts, base layout
-- Google Fonts: Caveat + JetBrains Mono in `Base.astro`
-- Global CSS: all design tokens as CSS variables + reset
-- Body: paper background, ink text
-- **Must pass:** `npm run build`
-- **Commit:** `task(2): design tokens, fonts, base layout`
+**Image compression (do first — screenshots are currently ~1–3 MB each):**
+- `npm install --save-dev sharp` or use `squoosh-cli`
+- Compress `public/images/screenshots/*.jpg` → target ≤200 KB each
+- Compress/convert `public/images/profile-nobg.png` → WebP if possible
+- Verify images still load after compression (`npm run build`)
 
-### Task 3 — Content schema + placeholder markdown files
-- `src/content/config.ts`: define `projects` and `services` collections
-- `src/config.ts`: SITE global config with section toggles
-- Create all placeholder `.md` files (mark replaceable content with `<!-- REPLACE -->`)
-- **Must pass:** `npm run build`
-- **Commit:** `task(3): content schema and placeholder markdown files`
+**Netlify deploy:**
+- `git push -u origin main` (confirm GitHub remote is set: `git remote -v`)
+- `npm install -g netlify-cli`
+- `netlify login` → Ahmad logs in / creates account
+- `netlify init` → connect GitHub repo, build command = `npm run build`, publish dir = `dist`
+- `netlify deploy --prod`
+- Verify auto-deploy webhook is active (push to main = auto deploy)
+- Verify Netlify Forms dashboard shows the contact form receiving submissions
+- Add live URL to README
 
-### Task 4 — Build all section components
-Build each to match Wireframe #3 exactly:
-- `Header.astro` — mono nav + Caveat logo + bottom border
-- `Hero.astro` — photo placeholder + H1 Caveat + squiggle SVG + CTA pills
-- `Stats.astro` — 3-col grid, Caveat numbers, mono labels
-- `NowNext.astro` — NOW box + arrow SVG + NEXT box
-- `LearningLog.astro` — contribution graph (GitHub API) + log entries
-- `Projects.astro` — tab UI (PHP | AI) + card grid from content collection
-- `TechStack.astro` — 3-col grid with tech pills
-- `Services.astro` — 3-col grid from content collection, numbered 01/02/03
-- `Contact.astro` — 2-col: links + static form
-- `Footer.astro` — copyright + tagline
-- **Must pass:** `npm run build`
-- **Commit:** `task(4): all section components built to wireframe spec`
+**Commit:** `task(10): images compressed, netlify configured, site live`
 
-### Task 5 — Compose index page + section toggles + polish
-- Wire all components into `src/pages/index.astro` (already done in Task 4)
-- Mark section toggles verified
-- **Smooth scroll**: add `html { scroll-behavior: smooth; }` to `global.css`
-- **Card hover lift**: `transform: translateY(-2px)` + `box-shadow` on `.project-card:hover` and `.service-card:hover`
-- **Must pass:** `npm run build`
-- **Commit:** `task(5): index composed, smooth scroll, card hover polish`
+---
 
-### Task 6 — Replace placeholder content with real data
-- Update `src/config.ts`: real email + LinkedIn slug (confirm with Ahmad)
-- Update all `src/content/projects/*.md`: real titles + descriptions
-- Update all `src/content/services/*.md`: confirm copy matches wireframe
-- Update Learning Log entries in `LearningLog.astro` (real study sessions)
-- **Must pass:** `npm run build`
-- **Commit:** `task(6): real content populated, placeholders replaced`
+### Task 11 — Custom domain (optional)
 
-### Task 7 — Images
-- Create `public/images/README.txt` with drop instructions
-- `Hero.astro`: load `/images/profile.jpg` with fallback to placeholder div
-- Project cards: load `/images/project-[slug].jpg` with SVG fallback
-- Add placeholder SVGs so build never breaks if images missing
-- **Must pass:** `npm run build`
-- **Commit:** `task(7): image slots wired with graceful fallbacks`
-
-### Task 8 — Mobile improvements
-- Mobile nav: show only resume pill button (no hamburger — deliberate decision)
-- Review and fix any other mobile layout issues (spacing, font sizes, etc.)
-- Test all sections at 375px and 430px widths
-- **Must pass:** `npm run build`
-- **Commit:** `task(8): mobile layout improvements`
-
-### Task 9 — Image optimisation + Netlify deploy
-- **Image optimisation (before deploy):**
-  - `npm install --save-dev sharp` (or use `squoosh-cli`)
-  - Compress `public/images/screenshots/*.jpg` — target ≤200KB each (currently ~1–3MB)
-  - Compress `public/images/profile-nobg.png` — convert to WebP if possible
-  - Re-run build and verify images still load
-- **Netlify deploy:**
-  - `git push -u origin main`
-  - `npm install -g netlify-cli`
-  - `netlify login` → Ahmad logs in / creates account
-  - `netlify init` → connect GitHub repo, set build command + publish dir
-  - `netlify deploy --prod`
-  - Verify auto-deploy webhook is active (push to main = auto deploy)
-  - Verify Netlify Forms is receiving submissions (check Netlify dashboard → Forms)
-  - Add live URL to README
-- **Commit:** `task(9): images optimised, netlify configured, site live`
-
-### Task 10 — Custom domain (optional)
-- Only if Ahmad provides a domain
+Only if Ahmad provides a domain name.
 - `netlify domains:add yourdomain.com`
-- SSL is automatic
-- **Commit:** `task(10): custom domain configured`
+- SSL is automatic via Let's Encrypt
+- Update `SITE.url` in `src/config.ts`
 
-### Task 11 — Final README cleanup
-- Document: local dev, content editing, section toggles, Learning Log, deploy flow, image drops
-- **Commit:** `task(11): final readme, handoff complete`
+**Commit:** `task(11): custom domain configured`
 
 ---
 
-## Blockers / Notes
+### Task 12 — Final README cleanup
 
-_None yet._
+- Document: local dev setup, content editing guide, section toggles, deploy flow, image drop instructions
+- Note the Learning Log is hidden (`learningLog: false` in `src/config.ts`) — enable when real study session data exists
+
+**Commit:** `task(12): final readme, handoff complete`
+
+---
+
+## Deferred / Known Items
+
+| Item | Notes |
+|---|---|
+| **Resume PDF** | Placeholder at `public/resume/Muhammad_Ahmad_Anwar_Resume.pdf` — Ahmad drops real PDF here |
+| **Learning Log** | Hidden via `SITE.sections.learningLog: false` — enable once real study sessions exist |
+| **GitHub Contributions graph** | Currently not shown (LearningLog hidden) — re-evaluate when section re-enabled |
+| **Product Intelligence project** | AI tab, status `thinking` — Ahmad still deciding direction |
 
 ---
 
