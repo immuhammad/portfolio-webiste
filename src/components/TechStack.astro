@@ -7,8 +7,8 @@ const columns = [
     pills: ['PHP 8', 'Laravel', 'Magento 2', 'MySQL', 'Shopify'],
   },
   {
-    label: 'AI World (in flight)',
-    pills: ['Python', 'PyTorch', 'LangChain', 'Pandas', 'SQL'],
+    label: 'AI / Data Engineering',
+    pills: ['Python', 'PyTorch', 'LangChain', 'Pandas', 'SQL', 'Airflow'],
   },
   {
     label: 'Glue',
@@ -64,41 +64,49 @@ const certsWip = [
         ))}
       </div>
 
-      <!-- Certifications row — full width, 2-col inside -->
-      <div class="cert-box ts-box">
+      <!-- Certifications — paired row grid so dividers align across columns -->
+      <div class="cert-box ts-box" id="certifications">
         <span class="ts-label mono">// certifications</span>
 
-        <div class="cert-cols">
+        <div class="cert-grid">
 
-          <!-- Earned -->
-          <div class="cert-col">
-            <p class="cert-col-label mono">✓ earned</p>
-            {certsEarned.map(c => (
-              <div class="cert-item">
-                <div class="cert-name-row">
-                  <span class="cert-name mono">{c.title}</span>
-                  {c.url && (
-                    <a href={c.url} target="_blank" rel="noopener noreferrer" class="cert-link mono">↗</a>
-                  )}
-                </div>
-                {c.sub && <p class="cert-sub mono">{c.sub}</p>}
-                <p class="cert-issuer mono">{c.issuer}</p>
-              </div>
-            ))}
+          <!-- Column headers -->
+          <p class="cert-col-label mono">✓ earned</p>
+          <p class="cert-col-label cert-col-label--wip mono">○ in progress</p>
+
+          <!-- Row 1 -->
+          <div class="cert-item">
+            <div class="cert-name-row">
+              <span class="cert-name mono">{certsEarned[0].title}</span>
+            </div>
+            {certsEarned[0].sub && <p class="cert-sub mono">{certsEarned[0].sub}</p>}
+            <p class="cert-issuer mono">{certsEarned[0].issuer}</p>
+          </div>
+          <div class="cert-item cert-item--wip">
+            <div class="cert-name-row">
+              <span class="cert-name mono">{certsWip[0].title}</span>
+              <span class="wip-badge mono">wip</span>
+            </div>
+            <p class="cert-issuer mono">{certsWip[0].issuer}</p>
           </div>
 
-          <!-- In progress -->
-          <div class="cert-col">
-            <p class="cert-col-label cert-col-label--wip mono">○ in progress</p>
-            {certsWip.map(c => (
-              <div class="cert-item cert-item--wip">
-                <div class="cert-name-row">
-                  <span class="cert-name mono">{c.title}</span>
-                  <span class="wip-badge mono">wip</span>
-                </div>
-                <p class="cert-issuer mono">{c.issuer}</p>
-              </div>
-            ))}
+          <!-- Row 2 -->
+          <div class="cert-item cert-item--last">
+            <div class="cert-name-row">
+              <span class="cert-name mono">{certsEarned[1].title}</span>
+              {certsEarned[1].url && (
+                <a href={certsEarned[1].url} target="_blank" rel="noopener noreferrer" class="cert-link mono">↗</a>
+              )}
+            </div>
+            {certsEarned[1].sub && <p class="cert-sub mono">{certsEarned[1].sub}</p>}
+            <p class="cert-issuer mono">{certsEarned[1].issuer}</p>
+          </div>
+          <div class="cert-item cert-item--wip cert-item--last">
+            <div class="cert-name-row">
+              <span class="cert-name mono">{certsWip[1].title}</span>
+              <span class="wip-badge mono">wip</span>
+            </div>
+            <p class="cert-issuer mono">{certsWip[1].issuer}</p>
           </div>
 
         </div>
@@ -129,7 +137,6 @@ const certsWip = [
   .title-text   { font-size: 28px; }
   .title-sub    { font-size: 11px; color: var(--ink-soft); }
 
-  /* 3-col grid */
   .ts-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -137,7 +144,6 @@ const certsWip = [
     margin-bottom: 14px;
   }
 
-  /* Shared box style */
   .ts-box {
     border: 1.5px dashed var(--ink);
     border-radius: 4px;
@@ -159,7 +165,6 @@ const certsWip = [
     color: var(--ink-soft);
   }
 
-  /* Pills */
   .ts-pills {
     display: flex;
     flex-wrap: wrap;
@@ -182,10 +187,11 @@ const certsWip = [
     padding-top: 20px;
   }
 
-  .cert-cols {
+  /* 2-col grid: certs side by side so rows share the same height → dividers align */
+  .cert-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    gap: 0 32px;
     margin-top: 8px;
   }
 
@@ -194,34 +200,40 @@ const certsWip = [
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--ink-soft);
+    margin-bottom: 0;
   }
 
   .cert-col-label--wip {
     color: var(--ink-soft);
   }
 
+  /* Each cert occupies a grid cell; bottom border acts as row divider */
   .cert-item {
-    margin-bottom: 12px;
-    padding-bottom: 12px;
+    padding: 12px 0;
     border-bottom: 1px dashed var(--ink-soft);
+    /* grid stretches both cells in a row to the same height → dividers align */
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
-  .cert-item:last-child {
+  .cert-item--last {
     border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
   }
 
   .cert-item--wip {
-    opacity: 0.65;
+    opacity: 0.6;
   }
 
   .cert-name-row {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
+    flex-wrap: wrap;
   }
 
   .cert-name {
@@ -260,7 +272,7 @@ const certsWip = [
   .cert-sub {
     font-size: 9px;
     color: var(--ink-soft);
-    margin-bottom: 2px;
+    margin-bottom: 3px;
     line-height: 1.5;
   }
 
@@ -273,6 +285,8 @@ const certsWip = [
   @media (max-width: 680px) {
     .ts-grid { grid-template-columns: 1fr; }
     .title-sub { display: none; }
-    .cert-cols { grid-template-columns: 1fr; gap: 16px; }
+    .cert-grid { grid-template-columns: 1fr; gap: 0; }
+    .cert-col-label--wip { margin-top: 16px; }
+    .cert-item--last { border-bottom: 1px dashed var(--ink-soft); }
   }
 </style>

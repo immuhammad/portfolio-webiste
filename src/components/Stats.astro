@@ -2,9 +2,9 @@
 import { SITE } from '../config';
 
 const stats = [
-  { value: SITE.stats.years,    label: 'PHP / Magento' },
-  { value: SITE.stats.projects, label: 'Projects Shipped' },
-  { value: SITE.stats.stacks,   label: 'Certs (Live · WIP)' },
+  { value: SITE.stats.years,    label: 'PHP/ Laravel/ Shopify/ Magento', link: '' },
+  { value: SITE.stats.projects, label: 'Projects Shipped',               link: '' },
+  { value: SITE.stats.stacks,   label: 'Certs (Live · WIP)',             link: '#certifications' },
 ];
 ---
 
@@ -12,7 +12,10 @@ const stats = [
   <div class="stats-inner">
     {stats.map((s) => (
       <div class="stat-card">
-        <span class="stat-value hand">{s.value}</span>
+        {s.link
+          ? <a href={s.link} class="stat-value hand stat-link">{s.value}</a>
+          : <span class="stat-value hand">{s.value}</span>
+        }
         <span class="stat-label mono">{s.label}</span>
       </div>
     ))}
@@ -46,6 +49,17 @@ const stats = [
     font-size: 38px;
     line-height: 1;
     color: var(--ink);
+  }
+
+  .stat-link {
+    text-decoration: none;
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+    transition: color 0.15s;
+  }
+
+  .stat-link:hover {
+    color: var(--accent);
   }
 
   .stat-label {
