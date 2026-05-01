@@ -47,13 +47,11 @@ const PAGE_SIZE = 4;
                 <span class="screenshot-label mono">screenshot · {p.data.tag.split('·')[0].trim()}</span>
               </div>
               <div class="card-body">
-                <div class="card-title-row">
-                  <h3 class="card-title hand">{p.data.title}</h3>
-                  {p.data.url && (
-                    <a href={p.data.url} target="_blank" rel="noopener noreferrer" class="card-link mono" title={`Visit ${p.data.title}`}>↗</a>
-                  )}
-                </div>
+                <h3 class="card-title hand">{p.data.title}</h3>
                 <p class="card-tag mono">{p.data.tag}</p>
+                {p.data.url && (
+                  <a href={p.data.url} target="_blank" rel="noopener noreferrer" class="card-live mono">↗ live site</a>
+                )}
                 <p class="card-desc mono">{p.body.trim()}</p>
               </div>
             </div>
@@ -89,13 +87,11 @@ const PAGE_SIZE = 4;
                     <span class="screenshot-label mono">screenshot · {p.data.tag.split('·')[0].trim()}</span>
                   </div>
                   <div class="card-body">
-                    <div class="card-title-row">
-                      <h3 class="card-title hand">{p.data.title}</h3>
-                      {p.data.url && (
-                        <a href={p.data.url} target="_blank" rel="noopener noreferrer" class="card-link mono" title={`Visit ${p.data.title}`}>↗</a>
-                      )}
-                    </div>
+                    <h3 class="card-title hand">{p.data.title}</h3>
                     <p class="card-tag mono">{p.data.tag}</p>
+                    {p.data.url && (
+                      <a href={p.data.url} target="_blank" rel="noopener noreferrer" class="card-live mono">↗ live site</a>
+                    )}
                     <p class="card-desc mono">{p.body.trim()}</p>
                   </div>
                 </div>
@@ -226,32 +222,32 @@ const PAGE_SIZE = 4;
     padding: 12px;
   }
 
-  .card-title-row {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 2px;
-  }
-
   .card-title {
     font-size: 18px;
+    margin-bottom: 3px;
   }
-
-  .card-link {
-    font-size: 13px;
-    color: var(--accent);
-    text-decoration: none;
-    flex-shrink: 0;
-    transition: opacity 0.15s;
-  }
-
-  .card-link:hover { opacity: 0.7; }
 
   .card-tag {
     font-size: 10px;
     color: var(--ink-soft);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+  }
+
+  .card-live {
+    display: inline-block;
+    font-size: 10px;
+    padding: 3px 10px;
+    border: 1.5px solid var(--accent);
+    border-radius: 999px;
+    color: var(--accent);
+    text-decoration: none;
+    margin-bottom: 8px;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .card-live:hover {
+    background: var(--accent);
+    color: var(--paper);
   }
 
   .card-desc {
