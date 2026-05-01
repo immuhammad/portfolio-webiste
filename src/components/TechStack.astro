@@ -283,10 +283,21 @@ const certsWip = [
   }
 
   @media (max-width: 680px) {
-    .ts-grid { grid-template-columns: 1fr; }
-    .title-sub { display: none; }
-    .cert-grid { grid-template-columns: 1fr; gap: 0; }
-    .cert-col-label--wip { margin-top: 16px; }
-    .cert-item--last { border-bottom: 1px dashed var(--ink-soft); }
+    .ts-grid    { grid-template-columns: 1fr; }
+    .title-sub  { display: none; }
+
+    .cert-grid  { grid-template-columns: 1fr; gap: 0; }
+
+    /* Reorder so earned certs stay together, then WIP certs together */
+    .cert-grid > :nth-child(1) { order: 1; }  /* ✓ earned label */
+    .cert-grid > :nth-child(3) { order: 2; }  /* Adobe */
+    .cert-grid > :nth-child(5) { order: 3; }  /* ML Spec */
+    .cert-grid > :nth-child(2) { order: 4; margin-top: 8px; } /* ○ in progress label */
+    .cert-grid > :nth-child(4) { order: 5; }  /* Claude */
+    .cert-grid > :nth-child(6) { order: 6; }  /* AWS ML */
+
+    /* Restore bottom borders in new order */
+    .cert-item              { border-bottom: 1px dashed var(--ink-soft); }
+    .cert-grid > :nth-child(6) { border-bottom: none; }
   }
 </style>

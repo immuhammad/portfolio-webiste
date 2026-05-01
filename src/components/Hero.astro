@@ -61,15 +61,15 @@ const { photoSrc } = Astro.props;
 
 <style>
   .hero {
-    padding: 44px 28px 8px;
+    padding: 24px 28px 8px;
     max-width: 1100px;
     margin: 0 auto;
   }
 
   .hero-inner {
     display: flex;
-    gap: 28px;
-    align-items: center;
+    gap: 36px;
+    align-items: flex-end;
   }
 
   /* ── Photo placeholder (wireframe-accurate) ── */
@@ -78,11 +78,17 @@ const { photoSrc } = Astro.props;
   }
 
   .photo-img {
-    width: 200px;
-    height: 240px;
+    width: 260px;
+    height: 340px;
     object-fit: cover;
-    border-radius: 4px;
-    border: 1.5px dashed var(--ink);
+    object-position: top center;
+    display: block;
+  }
+
+  .photo-img[src$=".png"] {
+    object-fit: contain;
+    object-position: bottom center;
+    filter: drop-shadow(4px 8px 20px rgba(34, 32, 24, 0.30));
   }
 
   .photo-placeholder {
@@ -172,8 +178,13 @@ const { photoSrc } = Astro.props;
   }
 
   @media (max-width: 640px) {
-    .hero-inner { flex-direction: column; }
-    .photo-placeholder,
-    .photo-img { width: 140px; height: 168px; }
+    .hero-inner {
+      flex-direction: column;
+      align-items: center;
+    }
+    .hero-photo { display: none; }
+    .hero-text  { text-align: center; }
+    .hero-ctas  { justify-content: center; }
+    .squiggle   { margin: 0 auto 16px; }
   }
 </style>
