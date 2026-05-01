@@ -14,12 +14,13 @@ Run `npm run build` before committing every task.
 | 2 | Design tokens, fonts, base layout | ✅ Done | `task(2): design tokens, fonts, base layout` |
 | 3 | Content schema + placeholder markdown files | ✅ Done | `task(3): content schema and placeholder markdown files` |
 | 4 | Build all section components (wireframe-accurate) | ✅ Done | `task(4): all section components built to wireframe spec` |
-| 5 | Compose index page + section toggles | ⬜ Pending | — |
-| 6 | Replace placeholder content with real data | ⬜ Pending | — |
+| 5 | Compose index + section toggles + polish (smooth scroll, card hover) | ✅ Done | `task(5): index composed, smooth scroll, card hover polish` |
+| 6 | Replace placeholder content with real data (waiting on Ahmad) | ⬜ Pending | — |
 | 7 | Images: slots + graceful fallbacks | ⬜ Pending | — |
-| 8 | Netlify setup + first real deploy | ⬜ Pending | — |
-| 9 | Custom domain (optional) | ⬜ Pending | — |
-| 10 | Final README cleanup | ⬜ Pending | — |
+| 8 | Mobile improvements (nav, layout tweaks) | ⬜ Pending | — |
+| 9 | Netlify setup + first real deploy | ⬜ Pending | — |
+| 10 | Custom domain (optional) | ⬜ Pending | — |
+| 11 | Final README cleanup | ⬜ Pending | — |
 
 ---
 
@@ -62,12 +63,13 @@ Build each to match Wireframe #3 exactly:
 - **Must pass:** `npm run build`
 - **Commit:** `task(4): all section components built to wireframe spec`
 
-### Task 5 — Compose index page + section toggles
-- Wire all components into `src/pages/index.astro`
-- Wrap each section in `{SITE.sections.X && <Section />}`
-- Verify section order: Header → Hero → Stats → NowNext → LearningLog → Projects → Stack → Services → Contact → Footer
+### Task 5 — Compose index page + section toggles + polish
+- Wire all components into `src/pages/index.astro` (already done in Task 4)
+- Mark section toggles verified
+- **Smooth scroll**: add `html { scroll-behavior: smooth; }` to `global.css`
+- **Card hover lift**: `transform: translateY(-2px)` + `box-shadow` on `.project-card:hover` and `.service-card:hover`
 - **Must pass:** `npm run build`
-- **Commit:** `task(5): index page composed, section toggles wired`
+- **Commit:** `task(5): index composed, smooth scroll, card hover polish`
 
 ### Task 6 — Replace placeholder content with real data
 - Update `src/config.ts`: real email + LinkedIn slug (confirm with Ahmad)
@@ -85,25 +87,39 @@ Build each to match Wireframe #3 exactly:
 - **Must pass:** `npm run build`
 - **Commit:** `task(7): image slots wired with graceful fallbacks`
 
-### Task 8 — Netlify setup + first real deploy
-- `git push -u origin main`
-- `npm install -g netlify-cli`
-- `netlify login` → Ahmad logs in / creates account
-- `netlify init` → connect GitHub repo, set build command + publish dir
-- `netlify deploy --prod`
-- Verify auto-deploy webhook is active (push to main = auto deploy)
-- Add live URL to README
-- **Commit:** `task(8): netlify configured, site live`
+### Task 8 — Mobile improvements
+- Mobile nav: show only resume pill button (no hamburger — deliberate decision)
+- Review and fix any other mobile layout issues (spacing, font sizes, etc.)
+- Test all sections at 375px and 430px widths
+- **Must pass:** `npm run build`
+- **Commit:** `task(8): mobile layout improvements`
 
-### Task 9 — Custom domain (optional)
+### Task 9 — Image optimisation + Netlify deploy
+- **Image optimisation (before deploy):**
+  - `npm install --save-dev sharp` (or use `squoosh-cli`)
+  - Compress `public/images/screenshots/*.jpg` — target ≤200KB each (currently ~1–3MB)
+  - Compress `public/images/profile-nobg.png` — convert to WebP if possible
+  - Re-run build and verify images still load
+- **Netlify deploy:**
+  - `git push -u origin main`
+  - `npm install -g netlify-cli`
+  - `netlify login` → Ahmad logs in / creates account
+  - `netlify init` → connect GitHub repo, set build command + publish dir
+  - `netlify deploy --prod`
+  - Verify auto-deploy webhook is active (push to main = auto deploy)
+  - Verify Netlify Forms is receiving submissions (check Netlify dashboard → Forms)
+  - Add live URL to README
+- **Commit:** `task(9): images optimised, netlify configured, site live`
+
+### Task 10 — Custom domain (optional)
 - Only if Ahmad provides a domain
 - `netlify domains:add yourdomain.com`
 - SSL is automatic
-- **Commit:** `task(9): custom domain configured`
+- **Commit:** `task(10): custom domain configured`
 
-### Task 10 — Final README cleanup
+### Task 11 — Final README cleanup
 - Document: local dev, content editing, section toggles, Learning Log, deploy flow, image drops
-- **Commit:** `task(10): final readme, handoff complete`
+- **Commit:** `task(11): final readme, handoff complete`
 
 ---
 

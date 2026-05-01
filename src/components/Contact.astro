@@ -31,8 +31,16 @@ import { SITE } from '../config';
           </ul>
         </div>
 
-        <!-- Right: static form sketch -->
-        <form class="contact-form" action="#" method="POST">
+        <!-- Right: form — Netlify Forms handles submission -->
+        <form
+          class="contact-form"
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+        >
+          <input type="hidden" name="form-name" value="contact" />
+          <p class="hidden"><label>Don't fill this out: <input name="bot-field" /></label></p>
           <div class="form-field">
             <input
               type="text"
@@ -40,6 +48,7 @@ import { SITE } from '../config';
               placeholder="NAME"
               class="form-input mono"
               autocomplete="name"
+              required
             />
           </div>
           <div class="form-field">
@@ -49,6 +58,7 @@ import { SITE } from '../config';
               placeholder="EMAIL"
               class="form-input mono"
               autocomplete="email"
+              required
             />
           </div>
           <div class="form-field">
@@ -57,12 +67,18 @@ import { SITE } from '../config';
               placeholder="MESSAGE"
               class="form-input form-textarea mono"
               rows="5"
+              required
             ></textarea>
           </div>
           <button type="submit" class="pill pill--accent submit-btn mono">
             $ send_message →
           </button>
         </form>
+
+        <div class="form-success" id="form-success" aria-live="polite">
+          <p class="hand success-title">Message sent.</p>
+          <p class="mono success-sub">I'll get back to you soon.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -148,7 +164,42 @@ import { SITE } from '../config';
     border: none;
   }
 
+  .hidden { display: none; }
+
+  .form-success {
+    display: none;
+    padding: 2rem 0;
+  }
+
+  .success-title {
+    font-size: 28px;
+    margin-bottom: 6px;
+  }
+
+  .success-sub {
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+
   @media (max-width: 680px) {
     .contact-grid { grid-template-columns: 1fr; }
   }
 </style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('.contact-form');
+  const success = document.getElementById('form-success');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    try {
+      await fetch('/', { method: 'POST', body: data });
+      form.style.display = 'none';
+      if (success) success.style.display = 'block';
+    } catch {
+      // fallback: let native form submit so Netlify still receives it
+      form.submit();
+    }
+  });
+</script>
