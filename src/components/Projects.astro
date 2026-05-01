@@ -74,37 +74,37 @@ const PAGE_SIZE = 4;
 
       <!-- AI panel -->
       <div class="tab-panel tab-panel--hidden" id="panel-ai" role="tabpanel">
-        {aiProjects.length > 0
-          ? (
-            <div class="card-grid">
-              {aiProjects.map(p => (
-                <div class="project-card">
-                  <div class="card-screenshot">
-                    <svg class="screenshot-x" preserveAspectRatio="none" viewBox="0 0 100 100" aria-hidden="true">
-                      <line x1="0" y1="0" x2="100" y2="100" stroke="var(--ink)" stroke-width="0.4" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" />
-                      <line x1="100" y1="0" x2="0" y2="100" stroke="var(--ink)" stroke-width="0.4" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" />
-                    </svg>
-                    <span class="screenshot-label mono">screenshot · {p.data.tag.split('·')[0].trim()}</span>
-                  </div>
-                  <div class="card-body">
-                    <h3 class="card-title hand">{p.data.title}</h3>
-                    <p class="card-tag mono">{p.data.tag}</p>
-                    {p.data.url && (
-                      <a href={p.data.url} target="_blank" rel="noopener noreferrer" class="card-live mono">↗ live site</a>
-                    )}
-                    <p class="card-desc mono">{p.body.trim()}</p>
-                  </div>
+        <div class="card-grid">
+          {aiProjects.map(p => {
+            const status = p.data.status ?? 'live';
+            const isDimmed = status === 'soon' || status === 'thinking';
+            const badgeMap = { wip: '// next up', soon: '// planned', thinking: '// thinking...' } as const;
+            const badge = status in badgeMap ? badgeMap[status as keyof typeof badgeMap] : undefined;
+            return (
+              <div class={`project-card${isDimmed ? ' project-card--dimmed' : ''}`}>
+                <div class={`card-screenshot${isDimmed ? ' card-screenshot--dimmed' : ''}`}>
+                  <svg class="screenshot-x" preserveAspectRatio="none" viewBox="0 0 100 100" aria-hidden="true">
+                    <line x1="0" y1="0" x2="100" y2="100" stroke="var(--ink)" stroke-width="0.4" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" />
+                    <line x1="100" y1="0" x2="0" y2="100" stroke="var(--ink)" stroke-width="0.4" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" />
+                  </svg>
+                  <span class="screenshot-label mono">{isDimmed ? 'coming soon' : `screenshot · ${p.data.tag.split('·')[0].trim()}`}</span>
                 </div>
-              ))}
-            </div>
-          )
-          : (
-            <div class="ai-empty">
-              <p class="hand ai-empty-title">The models are training. So am I.</p>
-              <p class="mono ai-empty-sub">PyTorch notebooks live here once they stop embarrassing me.</p>
-            </div>
-          )
-        }
+                <div class="card-body">
+                  <div class="ai-title-row">
+                    <h3 class="card-title hand">{p.data.title}</h3>
+                    {badge && <span class={`ai-badge mono${status === 'wip' ? ' ai-badge--wip' : ''}`}>{badge}</span>}
+                  </div>
+                  <p class="card-tag mono">{p.data.tag}</p>
+                  {!isDimmed && <p class="card-desc mono">{p.body.trim()}</p>}
+                  {isDimmed && <p class="card-desc card-desc--soon mono">{p.body.trim()}</p>}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div class="ai-footer">
+          <p class="hand ai-footer-line">The models are training. So am I.</p>
+        </div>
       </div>
 
     </div>
@@ -298,19 +298,55 @@ const PAGE_SIZE = 4;
     line-height: 1.7;
   }
 
-  /* AI empty state */
-  .ai-empty {
-    padding: 3rem 1rem;
+  /* AI project status */
+  .project-card--dimmed {
+    opacity: 0.5;
+  }
+
+  .card-screenshot--dimmed {
+    background: repeating-linear-gradient(
+      45deg,
+      transparent 0 8px,
+      rgba(0, 0, 0, 0.02) 8px 9px
+    );
+  }
+
+  .ai-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 3px;
+  }
+
+  .ai-badge {
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    border: 1px dashed var(--ink-soft);
+    border-radius: 999px;
+    padding: 1px 7px;
+    white-space: nowrap;
+  }
+
+  .ai-badge--wip {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .card-desc--soon {
+    opacity: 0.6;
+  }
+
+  .ai-footer {
     text-align: center;
+    padding: 20px 0 4px;
+    border-top: 1px dashed var(--ink-soft);
+    margin-top: 14px;
   }
 
-  .ai-empty-title {
-    font-size: 26px;
-    margin-bottom: 8px;
-  }
-
-  .ai-empty-sub {
-    font-size: 11px;
+  .ai-footer-line {
+    font-size: 18px;
     color: var(--ink-soft);
   }
 

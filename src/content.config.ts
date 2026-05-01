@@ -9,6 +9,7 @@ const projects = defineCollection({
     category:   z.enum(['php', 'ai']),
     screenshot: z.string().optional(),
     url:        z.string().optional(),
+    status:     z.enum(['live', 'wip', 'soon', 'thinking']).optional(),
     order:      z.number(),
   }),
 });
