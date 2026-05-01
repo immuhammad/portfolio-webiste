@@ -6,9 +6,7 @@
 
 ---
 
-<!-- Record a walkthrough GIF (e.g. with Kap or Cleanshot) and drop it here:
 ![Portfolio walkthrough](docs/demo.gif)
--->
 
 ---
 
