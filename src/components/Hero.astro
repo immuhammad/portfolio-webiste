@@ -3,37 +3,40 @@ import { SITE } from '../config';
 
 interface Props {
   photoSrc?: string;
+  hidePhoto?: boolean;
 }
-const { photoSrc } = Astro.props;
+const { photoSrc, hidePhoto = false } = Astro.props;
 ---
 
 <section class="hero">
   <div class="hero-inner">
     <!-- Photo -->
-    <div class="hero-photo">
-      {photoSrc
-        ? <img src={photoSrc} alt={SITE.name} class="photo-img" />
-        : <div class="photo-placeholder" aria-label="Photo placeholder">
-            <svg
-              class="placeholder-x"
-              preserveAspectRatio="none"
-              viewBox="0 0 100 100"
-              aria-hidden="true"
-            >
-              <line x1="0" y1="0" x2="100" y2="100" stroke="var(--ink)" stroke-width="0.4" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" />
-              <line x1="100" y1="0" x2="0" y2="100" stroke="var(--ink)" stroke-width="0.4" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" />
-            </svg>
-            <span class="placeholder-label mono">photo of you</span>
-          </div>
-      }
-    </div>
+    {!hidePhoto && (
+      <div class="hero-photo">
+        {photoSrc
+          ? <img src={photoSrc} alt={SITE.name} class="photo-img" />
+          : <div class="photo-placeholder" aria-label="Photo placeholder">
+              <svg
+                class="placeholder-x"
+                preserveAspectRatio="none"
+                viewBox="0 0 100 100"
+                aria-hidden="true"
+              >
+                <line x1="0" y1="0" x2="100" y2="100" stroke="var(--ink)" stroke-width="0.4" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" />
+                <line x1="100" y1="0" x2="0" y2="100" stroke="var(--ink)" stroke-width="0.4" stroke-dasharray="2 2" vector-effect="non-scaling-stroke" />
+              </svg>
+              <span class="placeholder-label mono">photo of you</span>
+            </div>
+        }
+      </div>
+    )}
 
     <!-- Text -->
     <div class="hero-text">
-      <p class="hero-tag mono accent">Two stacks. One engineer.</p>
+      <p class="hero-tag mono accent">Three stacks. One engineer.</p>
 
       <h1 class="hero-h1 hand">
-        PHP shops by day.<br />PyTorch notebooks by night.
+        PHP · Odoo · AI.<br />Backend engineer across all three.
       </h1>
 
       <!-- Squiggle underline — width matches wireframe (140px) -->

@@ -1,6 +1,6 @@
 export const SITE = {
   name: 'Muhammad Ahmad Anwar',
-  tagline: 'Two stacks. One engineer.',
+  tagline: 'Three stacks. One engineer.',
   email: 'muhammad.ahmad.anwar@gmail.com',
   github: 'immuhammad',
   linkedin: 'immuhammad',
