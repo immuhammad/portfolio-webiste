@@ -15,6 +15,7 @@ export const SITE = {
     nowNext:     true,
     learningLog: false,   // hidden until enough real data — toggle back to true in Task 6
     projects:    true,
+    erpWorld:    true,
     stack:       true,
     services:    true,
     contact:     true,

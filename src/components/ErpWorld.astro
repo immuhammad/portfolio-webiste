@@ -1,0 +1,284 @@
+---
+import { SITE } from '../config';
+---
+
+{SITE.sections.erpWorld && (
+<section class="erp-world" id="erp-world">
+  <div class="erp-inner">
+
+    <div class="section-title-row">
+      <span class="title-prefix mono">❯</span>
+      <span class="title-text hand">ERP World</span>
+      <span class="title-sub mono">— Odoo implementation · custom modules · data migration</span>
+    </div>
+
+    <!-- Case Study — full width -->
+    <div class="case-study">
+      <div class="cs-header">
+        <span class="cs-badge mono">case study</span>
+        <h3 class="cs-title hand">Proposal System → Odoo 18 Migration</h3>
+      </div>
+
+      <div class="cs-meta mono">
+        <span><span class="cs-label">Client</span> B2B Services Company (confidential)</span>
+        <span><span class="cs-label">Stack</span> Odoo 18 · Python · XML Views · Docker · QuickBooks API · Web Scraping</span>
+      </div>
+
+      <div class="cs-body">
+        <div class="cs-col">
+          <p class="cs-section-label mono">// the problem</p>
+          <p class="cs-text mono">
+            Client ran a legacy proposal tool with years of invoices and proposals locked inside it.
+            No API. Wanted QuickBooks integration short-term and a full ERP long-term.
+          </p>
+        </div>
+        <div class="cs-col">
+          <p class="cs-section-label mono">// what I built</p>
+          <ul class="cs-list mono">
+            <li>Proposed Odoo 18 as the single platform — CRM, Accounting, Contacts, ERP in one. Saved cost of 3 separate tools.</li>
+            <li>Built a data pipeline: scraped source data where no API existed, ran alpha + beta migration phases with full validation.</li>
+            <li>Developed custom Odoo modules for proposal management and two-way QuickBooks sync using Python ORM + XML views.</li>
+            <li>Delivered client training and handover documentation.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cs-result">
+        <span class="cs-result-label mono">// result</span>
+        <p class="cs-result-text hand">Accounting, CRM, and proposals unified on one platform. Manual reconciliation eliminated. Client self-sufficient post-handover.</p>
+      </div>
+    </div>
+
+    <!-- Capability cards -->
+    <div class="cap-grid">
+      <div class="cap-card">
+        <span class="cap-num mono">01</span>
+        <h4 class="cap-title hand">Odoo Implementation</h4>
+        <p class="cap-tag mono">Cloud · Open Source · Odoo.sh</p>
+      </div>
+      <div class="cap-card">
+        <span class="cap-num mono">02</span>
+        <h4 class="cap-title hand">Custom Module Dev</h4>
+        <p class="cap-tag mono">Python ORM · XML Views · Wizards · OWL</p>
+      </div>
+      <div class="cap-card">
+        <span class="cap-num mono">03</span>
+        <h4 class="cap-title hand">Data Migration</h4>
+        <p class="cap-tag mono">Pipeline design · Scraping · Alpha/Beta phases · Zero data loss</p>
+      </div>
+    </div>
+
+    <!-- Stack pills -->
+    <div class="erp-stack">
+      <span class="stack-label mono">// stack</span>
+      <div class="stack-pills">
+        {['Odoo 18', 'Python', 'XML Views', 'PostgreSQL', 'Docker', 'QuickBooks API', 'OWL', 'Odoo.sh'].map(p =>
+          <span class="stack-pill mono">{p}</span>
+        )}
+      </div>
+    </div>
+
+  </div>
+</section>
+)}
+
+<style>
+  .erp-world {
+    padding: 8px 28px 32px;
+  }
+
+  .erp-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .title-prefix { font-size: 14px; color: var(--accent); }
+  .title-text   { font-size: 28px; }
+  .title-sub    { font-size: 11px; color: var(--ink-soft); }
+
+  /* ── Case Study ── */
+  .case-study {
+    border: 1.5px dashed var(--ink);
+    border-radius: 4px;
+    background: var(--paper-2);
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+
+  .cs-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .cs-badge {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+    border-radius: 999px;
+    padding: 2px 9px;
+  }
+
+  .cs-title {
+    font-size: 22px;
+    font-weight: 400;
+  }
+
+  .cs-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 10px;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--ink-soft);
+  }
+
+  .cs-label {
+    color: var(--ink);
+    font-weight: 500;
+    margin-right: 6px;
+  }
+
+  .cs-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 16px;
+  }
+
+  .cs-section-label {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .cs-text {
+    font-size: 10px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+
+  .cs-list {
+    font-size: 10px;
+    line-height: 1.8;
+    color: var(--ink-soft);
+    padding-left: 14px;
+  }
+
+  .cs-result {
+    border-top: 1px dashed var(--ink-soft);
+    padding-top: 14px;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .cs-result-label {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  .cs-result-text {
+    font-size: 16px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+
+  /* ── Capability cards ── */
+  .cap-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .cap-card {
+    border: 1.5px dashed var(--ink);
+    border-radius: 4px;
+    padding: 16px;
+    background: var(--paper);
+  }
+
+  .cap-num {
+    font-size: 11px;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .cap-title {
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 6px;
+  }
+
+  .cap-tag {
+    font-size: 10px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* ── Stack pills ── */
+  .erp-stack {
+    border: 1.5px dashed var(--ink);
+    border-radius: 4px;
+    padding: 14px 16px 10px;
+    position: relative;
+    background: var(--paper);
+  }
+
+  .stack-label {
+    position: absolute;
+    top: -9px;
+    left: 10px;
+    background: var(--paper);
+    padding: 0 6px;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .stack-pills {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+
+  .stack-pill {
+    display: inline-block;
+    padding: 3px 9px;
+    border: 1.5px dashed var(--ink);
+    border-radius: 999px;
+    font-size: 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    color: var(--ink);
+  }
+
+  @media (max-width: 680px) {
+    .cs-body       { grid-template-columns: 1fr; }
+    .cap-grid      { grid-template-columns: 1fr; }
+    .title-sub     { display: none; }
+    .cs-result     { flex-direction: column; gap: 6px; }
+  }
+</style>
