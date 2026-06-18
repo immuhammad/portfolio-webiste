@@ -3,10 +3,10 @@ export const SITE = {
   tagline: 'Three stacks. One engineer.',
   email: 'muhammad.ahmad.anwar@gmail.com',
   github: 'immuhammad',
-  linkedin: 'immuhammad',
+  linkedin: 'm-ahmad-anwar',
 
   stats: {
-    years: '8 yrs',
+    years: '7+ yrs',
     projects: '50+',
     stacks: '2 + 2',
   },

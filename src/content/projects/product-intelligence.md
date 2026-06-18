@@ -6,4 +6,4 @@ status: thinking
 order: 4
 ---
 
-Something that closes the gap between 8 years of e-commerce data and actual ML output — product recommendations, demand forecasting, or upsell scoring. The shape is still forming.
+Something that closes the gap between 7+ years of e-commerce data and actual ML output — product recommendations, demand forecasting, or upsell scoring. The shape is still forming.
